@@ -5,6 +5,11 @@ const regex = {
   password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/,
 };
 
+const name = Yup.string()
+  .min(2, "Min length is 2")
+  .max(20, "Max length is 20")
+  .required("Name is required");
+
 const email = Yup.string()
   .matches(regex.email, "Enter correct email")
   .required("Email field is required");
@@ -18,7 +23,12 @@ const password = Yup.string()
   .required("Password field is required");
 
 export const schemas = {
-  custom: Yup.object().shape({
+  login: Yup.object().shape({
+    email,
+    password,
+  }),
+  signup: Yup.object().shape({
+    name,
     email,
     password,
   }),
