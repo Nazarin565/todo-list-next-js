@@ -9,8 +9,10 @@ import { SignupFormValues } from "@/types/AuthType";
 import { getAuth, updateProfile } from "firebase/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Signup() {
+  const [error, setError] = useState("");
   const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);
   const router = useRouter();
@@ -21,6 +23,10 @@ export default function Signup() {
         data.email,
         data.password
       );
+      if (!response) {
+        setError("Seems you already have an account. Try again or log in");
+        return;
+      }
       if (response) {
         const authInstance = getAuth();
         if (authInstance.currentUser)
@@ -91,6 +97,8 @@ export default function Signup() {
               )}
             </ErrorMessage>
           </div>
+
+          {error && <p className="text-red-500">{error}</p>}
 
           <button
             type="submit"

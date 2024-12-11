@@ -8,9 +8,11 @@ import { auth } from "../firebase";
 import { initialLoginValues } from "@/constants/formInitialValues";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Login() {
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (data: LoginFormValues) => {
@@ -19,6 +21,12 @@ export default function Login() {
         data.email,
         data.password
       );
+
+      if (!response) {
+        setError("Invalid data. Please try again or sign up");
+        return;
+      }
+
       if (response?.user.displayName) {
         localStorage.setItem("displayName", response.user.displayName);
       }
@@ -29,7 +37,8 @@ export default function Login() {
         router.push("/");
       }
     } catch (error) {
-      console.error(error);
+      console.error("Nevirnii parol");
+      setError("Invalid data. Please try again or sign up");
     }
   };
 
@@ -68,6 +77,8 @@ export default function Login() {
               )}
             </ErrorMessage>
           </div>
+
+          {error && <p className="text-red-500">{error}</p>}
 
           <button
             type="submit"

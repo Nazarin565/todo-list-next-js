@@ -13,11 +13,7 @@ import {
 import { AddTask } from "./AddTask";
 import { useRouter } from "next/navigation";
 
-// type Props = {
-//   filteredData: Task[];
-// };
-
-export const TodoList = ({}) => {
+export const TodoList = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [openedTasksId, setOpenedTasksId] = useState<string[]>([]);
