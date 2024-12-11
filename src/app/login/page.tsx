@@ -37,8 +37,7 @@ export default function Login() {
         router.push("/");
       }
     } catch (error) {
-      console.error("Nevirnii parol");
-      setError("Invalid data. Please try again or sign up");
+      console.error(error);
     }
   };
 
