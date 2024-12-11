@@ -30,12 +30,12 @@ export const TodoItem: React.FC<Props> = ({
   const [newTaskQuery, setNewTaskQuery] = useState("");
 
   const handleOpenEditForm = (e: React.MouseEvent) => {
-    handleOpenEditing(e, { id, completed, description, title });
+    handleOpenEditing(e, task);
     setNewTaskQuery(title);
   };
 
   return (
-    <li className="flex gap-2 items-center">
+    <li className="w-full flex gap-2 items-center">
       <button
         aria-label="Toogle completed task"
         onClick={() => handleToogleComplete(id)}
@@ -52,10 +52,10 @@ export const TodoItem: React.FC<Props> = ({
         )}
       </button>
       <div
-        className="w-full border p-3 border-black flex flex-col gap-3 hover:bg-slate-100 cursor-pointer"
+        className="overflow-auto w-full border p-3 border-black flex flex-col gap-3 hover:bg-slate-100 cursor-pointer"
         onClick={() => handleToogleOpenedTask(id)}
       >
-        <div className="w-full flex justify-between hover:bg-slate-100 cursor-pointer ">
+        <div className="w-full flex justify-between gap-px hover:bg-slate-100 cursor-pointer ">
           {editingTask?.id === id ? (
             <form onSubmit={(e) => handleEditTask(e, newTaskQuery, id)}>
               <input
@@ -70,7 +70,7 @@ export const TodoItem: React.FC<Props> = ({
             </form>
           ) : (
             <p
-              className={classNames({
+              className={classNames("w-5/6 overflow-hidden", {
                 "line-through text-gray-400": completed,
               })}
             >
@@ -81,7 +81,7 @@ export const TodoItem: React.FC<Props> = ({
             <button
               aria-label="Edit task"
               onClick={handleOpenEditForm}
-              className="cursor-pointer hover:bg-gray-300"
+              className="cursor-pointer hover:bg-gray-300 flex-shrink-0"
             >
               <Image
                 aria-hidden
@@ -95,7 +95,7 @@ export const TodoItem: React.FC<Props> = ({
             <button
               aria-label="Delete task"
               onClick={(e) => handleDeleteTask(id, e)}
-              className="cursor-pointer hover:bg-gray-300"
+              className="cursor-pointer hover:bg-gray-300 flex-shrink-0"
             >
               <Image
                 aria-hidden
@@ -109,7 +109,7 @@ export const TodoItem: React.FC<Props> = ({
         </div>
 
         {openedTasksId.includes(id) && (
-          <p className="text-xs text-orange-600">{description}</p>
+          <p className="text-xs text-orange-600 break-words">{description}</p>
         )}
       </div>
     </li>

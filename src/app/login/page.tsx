@@ -41,49 +41,51 @@ export default function Login() {
       validationSchema={schemas.login}
       onSubmit={handleSubmit}
     >
-      <Form className="w-[100vw] h-[100vh] flex flex-col gap-2 justify-center items-center">
-        <div className="flex flex-col">
-          <Field
-            name="email"
-            type="email"
-            placeholder="Enter your email"
-            className="p-2 w-96"
-          />
-          <ErrorMessage name="email">
-            {(error) => (
-              <span className="text-xs text-red-600 ml-1">{error}</span>
-            )}
-          </ErrorMessage>
-        </div>
+      <div className="p-12 flex justify-center items-center h-[100vh]">
+        <Form className="bg-white rounded-lg shadow-lg p-14 max-w-[800px] w-full flex flex-col items-center gap-2">
+          <div className="flex flex-col w-3/4">
+            <Field
+              name="email"
+              type="email"
+              placeholder="Enter your email"
+              className="p-2 border border-gray-400"
+            />
+            <ErrorMessage name="email">
+              {(error) => (
+                <span className="text-xs text-red-600 ml-1">{error}</span>
+              )}
+            </ErrorMessage>
+          </div>
 
-        <div className="flex flex-col">
-          <Field
-            name="password"
-            type="password"
-            placeholder="Enter your Password"
-            className="p-2 w-96"
-          />
-          <ErrorMessage name="password">
-            {(error) => (
-              <span className="text-xs text-red-600 ml-1">{error}</span>
-            )}
-          </ErrorMessage>
-        </div>
+          <div className="flex flex-col w-3/4">
+            <Field
+              name="password"
+              type="password"
+              placeholder="Enter your Password"
+              className="p-2 border border-gray-400"
+            />
+            <ErrorMessage name="password">
+              {(error) => (
+                <span className="text-xs text-red-600 ml-1">{error}</span>
+              )}
+            </ErrorMessage>
+          </div>
 
-        <button
-          type="submit"
-          className="bg-slate-400 hover:bg-slate-500 rounded-3xl h-9 w-80"
-        >
-          Log in
-        </button>
-        <p>
-          Don&apos;t have an account?{" "}
-          <Link href="/signup" className="text-blue-600 hover:underline">
-            Sign up
-          </Link>{" "}
-          now!
-        </p>
-      </Form>
+          <button
+            type="submit"
+            className="bg-slate-400 hover:bg-slate-500 rounded-3xl h-9 w-2/4"
+          >
+            Log in
+          </button>
+          <p className="">
+            Don&apos;t have an account?{" "}
+            <Link href="/signup" className="text-blue-600 hover:underline">
+              Sign up
+            </Link>{" "}
+            now!
+          </p>
+        </Form>
+      </div>
     </Formik>
   );
 }

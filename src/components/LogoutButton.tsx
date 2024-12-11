@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-export const ButtonCustom = () => {
+export const LogOutButton = () => {
   const router = useRouter();
 
   return (
@@ -12,6 +12,7 @@ export const ButtonCustom = () => {
         localStorage.removeItem("userUID");
         router.replace("/login");
       }}
+      className="bg-red-200 w-1/2 self-center p-1 text-sm"
     >
       Log out
     </button>

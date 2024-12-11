@@ -1,7 +1,7 @@
 import { TodoList } from "@/components/TodoList";
 import { getTasks } from "./api/tasks/tasks";
-import { ButtonCustom } from "@/components/ButtonCustom";
 import { DisplayUserName } from "@/components/DisplayUserName";
+import { LogOutButton } from "@/components/LogoutButton";
 
 export default async function Home() {
   const filteredData = await getTasks();
@@ -15,7 +15,7 @@ export default async function Home() {
 
         <TodoList filteredData={filteredData} />
 
-        <ButtonCustom />
+        <LogOutButton />
       </main>
     </div>
   );
