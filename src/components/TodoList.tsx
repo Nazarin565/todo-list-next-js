@@ -35,7 +35,7 @@ export const TodoList: React.FC<Props> = ({ filteredData }) => {
 
     setUserUid(userUid);
     setTasks(filteredData.filter((item) => item.userUid === userUid));
-  }, [filteredData, router]);
+  }, []);
 
   const handleAddTask = async (
     e: React.FormEvent,
@@ -58,7 +58,7 @@ export const TodoList: React.FC<Props> = ({ filteredData }) => {
 
     const response = await addTask(newTask);
 
-    console.log(response);
+    (response);
 
     setTasks((prev) => [response, ...prev]);
 
