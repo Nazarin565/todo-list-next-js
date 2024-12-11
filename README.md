@@ -2,6 +2,9 @@
 
 This project uses Next.js with Firebase.
 
+You can open the project with a live demo link:
+[Demo link](https://skidochki-1.netlify.app/)
+
 ## How to Run the Project Locally
 
 1. Clone repository with `git clone`
