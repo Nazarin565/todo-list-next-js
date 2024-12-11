@@ -7,16 +7,17 @@ import {
   addTask,
   deleteTask,
   editTask,
+  getTasks,
   toogleCompleted,
 } from "@/app/api/tasks/tasks";
 import { AddTask } from "./AddTask";
 import { useRouter } from "next/navigation";
 
-type Props = {
-  filteredData: Task[];
-};
+// type Props = {
+//   filteredData: Task[];
+// };
 
-export const TodoList: React.FC<Props> = ({ filteredData }) => {
+export const TodoList = ({}) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [openedTasksId, setOpenedTasksId] = useState<string[]>([]);
@@ -34,8 +35,11 @@ export const TodoList: React.FC<Props> = ({ filteredData }) => {
     }
 
     setUserUid(userUid);
-    setTasks(filteredData.filter((item) => item.userUid === userUid));
-  }, [filteredData, router]);
+
+    getTasks().then((data) =>
+      setTasks(data.filter((item) => item.userUid === userUid))
+    );
+  }, [router]);
 
   const handleAddTask = async (
     e: React.FormEvent,

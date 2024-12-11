@@ -34,8 +34,6 @@ export default function Signup() {
       if (response?.user.uid) {
         localStorage.setItem("userUID", response.user.uid);
       }
-
-      console.log(response);
       if (response) {
         router.push("/");
       }
