@@ -22,6 +22,7 @@ export const getTasks = async () => {
       completed: doc.data().completed,
       description: doc.data().description,
       timestamp: doc.data().timestamp,
+      userUid: doc.data().userUid,
     }))
     .sort((a, b) => b.timestamp - a.timestamp);
 
@@ -30,7 +31,7 @@ export const getTasks = async () => {
 
 export const addTask = async (task: Omit<Task, "id">) => {
   const newTask = await addDoc(tasksCollection, task);
-  return { id: newTask.id, timestamp: Date.now(), ...task };
+  return { id: newTask.id, ...task };
 };
 
 export const deleteTask = async (id: string) => {

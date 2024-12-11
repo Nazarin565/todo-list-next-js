@@ -1,7 +1,7 @@
 "use client";
 
 import { Task } from "@/types/TaskType";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TodoItem } from "./TodoItem";
 import {
   addTask,
@@ -10,29 +10,50 @@ import {
   toogleCompleted,
 } from "@/app/api/tasks/tasks";
 import { AddTask } from "./AddTask";
+import { useRouter } from "next/navigation";
 
 type Props = {
   filteredData: Task[];
 };
 
 export const TodoList: React.FC<Props> = ({ filteredData }) => {
-  const [tasks, setTasks] = useState<Task[]>(filteredData);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [openedTasksId, setOpenedTasksId] = useState<string[]>([]);
-  const [query, setQuery] = useState("");
+  const [queryTask, setQueryTask] = useState("");
+  const [queryDescription, setQueryDescription] = useState("");
+  const [userUid, setUserUid] = useState<string | null>(null);
 
-  const handleAddTask = async (e: React.FormEvent, query: string) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const userUid = localStorage.getItem("userUID");
+
+    if (!userUid) {
+      router.replace("/login");
+    }
+
+    setUserUid(userUid);
+    setTasks(filteredData.filter((item) => item.userUid === userUid));
+  }, []);
+
+  const handleAddTask = async (
+    e: React.FormEvent,
+    queryTask: string,
+    queryDescription: string
+  ) => {
     e.preventDefault();
 
-    if (!query.trim()) {
+    if (!queryTask.trim() || !userUid) {
       return;
     }
 
     const newTask = {
-      title: query,
-      description: "",
+      title: queryTask.trim(),
+      description: queryDescription.trim(),
       completed: false,
       timestamp: Date.now(),
+      userUid,
     };
 
     const response = await addTask(newTask);
@@ -41,11 +62,18 @@ export const TodoList: React.FC<Props> = ({ filteredData }) => {
 
     setTasks((prev) => [response, ...prev]);
 
-    setQuery("");
+    setQueryTask("");
+    setQueryDescription("");
   };
 
-  const handleChangeQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
+  const handleChangeQueryTask = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQueryTask(e.target.value);
+  };
+
+  const handleChangeQueryDescription = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setQueryDescription(e.target.value);
   };
 
   const handleToogleOpenedTask = (id: string) => {
@@ -97,15 +125,23 @@ export const TodoList: React.FC<Props> = ({ filteredData }) => {
     }
 
     editTask(id, editedTask);
+
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === id ? { ...task, title: editedTask } : task
+      )
+    );
     setEditingTask(null);
   };
 
   return (
     <>
       <AddTask
-        query={query}
+        queryTask={queryTask}
+        queryDescription={queryDescription}
         handleAddTask={handleAddTask}
-        handleChangeQuery={handleChangeQuery}
+        handleChangeQueryTask={handleChangeQueryTask}
+        handleChangeQueryDescription={handleChangeQueryDescription}
       />
 
       {!!tasks.length ? (

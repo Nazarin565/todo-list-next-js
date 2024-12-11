@@ -29,8 +29,12 @@ export default function Signup() {
           });
       }
       if (response?.user.displayName) {
-        document.cookie = `displayName=${response.user.displayName}; path=/;`;
+        localStorage.setItem("displayName", response.user.displayName);
       }
+      if (response?.user.uid) {
+        localStorage.setItem("userUID", response.user.uid);
+      }
+
       console.log(response);
       if (response) {
         router.push("/");
